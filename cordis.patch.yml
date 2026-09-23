@@ -1,0 +1,31 @@
+# dsh-terse — mandatory, always-on terseness for every agent in this profile.
+#
+# One row. It contributes prompt sections/context and rides tool results; it
+# registers no tool, provides no service, gates no call, and never touches the
+# deployment's own system prompt. Mounting the row IS the enabling act: there is
+# no mode and no off switch.
+#
+# Field overrides are optional; the shipped defaults are the product.
+- insert:
+    - id: terse
+      name: '@sagmans/dsh-terse'
+      config:
+        # L4 input shaping runs by default. Set false to leave tool output
+        # untouched while every output-side and prompt-side layer stays on.
+        shaping: true
+        # Drift thresholds (L3). Tuned so ordinary answers never trigger; the
+        # nudge catches collapse over a long turn, not every long sentence.
+        drift:
+          maxReplyTokens: 220
+          minReplyTokensToJudge: 60
+          maxProseRatio: 0.72
+          minJudgeableProseRatio: 0.4
+          idleStepsBeforeNudge: 14
+          maxNudgesPerTurn: 2
+        # Input-shaping bounds (L4). The threshold sits well above ordinary tool
+        # output so the common case is untouched and pays nothing.
+        shapingConfig:
+          maxResultChars: 12000
+          headChars: 3000
+          tailChars: 1500
+          duplicateRunMin: 4

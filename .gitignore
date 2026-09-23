@@ -145,3 +145,6 @@ vite.config.ts.timestamp-*
 # Build output — a linked profile loads lib/, and it is regenerated, never source.
 lib/
 *.tsbuildinfo
+
+# Research and planning notes stay local; they are working artifacts, not shipped docs.
+docs/
