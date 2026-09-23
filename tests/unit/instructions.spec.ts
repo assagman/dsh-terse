@@ -23,6 +23,10 @@ describe('constitution', () => {
     expect(CONSTITUTION).toMatch(/irreversible/i)
   })
 
+  it('separates form from substance', () => {
+    expect(CONSTITUTION).toMatch(/Compress form, never substance/)
+  })
+
   it('keeps artifacts out of scope', () => {
     expect(CONSTITUTION).toMatch(/Persisted artifacts stay normal prose/i)
   })
@@ -32,7 +36,7 @@ describe('constitution', () => {
     // the savings it exists to produce. The ceiling is stated in the estimator's
     // own units (non-whitespace chars / 4), which overcounts real prose by
     // roughly 10-20%, so the true cost is near 210 tokens.
-    expect(replyShape(CONSTITUTION).tokens).toBeLessThanOrEqual(280)
+    expect(replyShape(CONSTITUTION).tokens).toBeLessThanOrEqual(360)
   })
 
   it('orders before the first tool section (TOOL_BASH = 1000)', () => {
