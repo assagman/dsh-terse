@@ -31,11 +31,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/assagman/dsh-terse.git"
+    "url": "git+https://github.com/sagmans/dsh-terse.git"
   },
-  "homepage": "https://github.com/assagman/dsh-terse#readme",
+  "homepage": "https://github.com/sagmans/dsh-terse#readme",
   "bugs": {
-    "url": "https://github.com/assagman/dsh-terse/issues"
+    "url": "https://github.com/sagmans/dsh-terse/issues"
   },
   "engines": {
     "node": ">=22.19"
