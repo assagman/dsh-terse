@@ -19,7 +19,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "rootDir": "src",
     "skipLibCheck": true
   },

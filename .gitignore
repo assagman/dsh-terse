@@ -142,9 +142,13 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# Build output — a linked profile loads lib/, and it is regenerated, never source.
-lib/
+# Build output — a linked profile loads dist/, and it is regenerated, never source.
+dist/
 *.tsbuildinfo
 
 # Research and planning notes stay local; they are working artifacts, not shipped docs.
 docs/
+
+# Python bytecode from the release-helper test suite; regenerated on every run.
+__pycache__/
+*.pyc

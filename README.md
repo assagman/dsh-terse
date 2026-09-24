@@ -90,7 +90,7 @@ pnpm test
 pnpm run build
 ```
 
-A profile loads `lib/`, not `src/`; run `pnpm run build` before dogfooding a linked profile.
+A profile loads `dist/`, not `src/`; run `pnpm run build` before dogfooding a linked profile.
 
 ## Try it in the TUI
 
