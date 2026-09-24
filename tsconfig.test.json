@@ -4,7 +4,8 @@
     "noEmit": true,
     "rootDir": ".",
     "outDir": "lib-test",
-    "baseUrl": ".",
+    // No baseUrl: TS 6 deprecates it, and "paths" resolves against this file's
+    // directory by default, which is the repository root either way.
     "paths": {
       "@/*": ["./src/*"]
     },

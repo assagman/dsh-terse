@@ -93,7 +93,7 @@ PY
   exit 0
 fi
 
-# Build so the profile loads current lib/, then link this checkout into the
+# Build so the profile loads current dist/, then link this checkout into the
 # profile's own node_modules: a profile resolves its bundles relative to itself.
 note "building $checkout"
 (cd "$checkout" && pnpm run build >/dev/null)
