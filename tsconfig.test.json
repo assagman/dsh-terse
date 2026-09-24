@@ -3,7 +3,17 @@
   "compilerOptions": {
     "noEmit": true,
     "rootDir": ".",
-    "outDir": "lib-test"
+    "outDir": "lib-test",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    // The specs import through the "@" alias, which vitest resolves at runtime.
+    // tsc only rewrites extensions on relative paths, so the alias would trip
+    // that rewrite. Nothing is emitted here, so the rewrite is off and the
+    // explicit ".ts" specifiers the source style uses are allowed instead.
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true
   },
   "include": [
     "src",
