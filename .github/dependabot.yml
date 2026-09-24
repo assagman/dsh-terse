@@ -28,6 +28,12 @@ updates:
       # tree vitest expects; only a vitest bump is allowed to cross that line.
       - dependency-name: '@vitest/mocker'
         update-types: [version-update:semver-major, version-update:semver-minor]
+      # @types/node majors track Node majors, and the runtime this plugin targets is
+      # fixed by engines.node. The exact pin alone cannot stop the bot: a version with
+      # no range leaves Dependabot free to raise the major, which is how it proposed
+      # 26.x for a Node 24 target. Types must never lead the engine.
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
 
   # Every action is pinned by commit SHA, and nothing else raises those pins.
   - package-ecosystem: github-actions
