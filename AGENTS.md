@@ -3,9 +3,9 @@
 `@sagmans/dsh-terse` is a Cordis plugin for DeepSeek Harness that makes agent output
 maximally terse without costing quality. It is always-on and append-only: it contributes a
 prompt section, a durable context snapshot, and two `tools/post-execute` behaviours, and it
-never touches the deployment's own system prompt. ESM TypeScript (strict), Node >= 22.19,
-pnpm. Behaviour, install, and the benchmark that backs the claims:
-[README.md](README.md) and [benchmark/README.md](benchmark/README.md).
+never touches the deployment's own system prompt. ESM TypeScript (strict), Node ^24, pnpm.
+Behaviour, install, and the benchmark that backs the claims: [README.md](README.md) and
+[benchmark/README.md](benchmark/README.md). Release policy: [RELEASE.md](RELEASE.md).
 
 ## Contributing
 
@@ -26,7 +26,11 @@ git commit -s -S -m "<conventional-commit message>"
 | --- | --- |
 | Typecheck `src` and `tests` | `pnpm run typecheck` |
 | Unit tests | `pnpm test` |
-| Build `src` into `lib` | `pnpm run build` |
+| Build `src` into `dist` | `pnpm run build` |
+| Built-artifact tests (imports `dist/`) | `pnpm run test:build` |
+| Release-guard tests (synthetic CLIs, no writes) | `pnpm test:release` |
+| Packed-tarball smoke test | `pnpm run pack-smoke` |
+| All of the above | `pnpm run check` |
 | Dogfood on the real tui profile | `./scripts/dogfood/run-terse-from-worktree.sh` |
 
 ## Map
@@ -39,12 +43,24 @@ git commit -s -S -m "<conventional-commit message>"
   harness, so it is testable and inspectable in isolation.
 - `src/shaping.ts` is the pure input-shaping core (run collapse + middle elision).
 - `tests/unit/*.spec.ts` are the focused specs.
-- `lib/` is build output and is not edited by hand.
+- `tests/build/*.test.mjs` exercise the built `dist/` artefact, not the sources.
+- `tests/release/*.py` exercise `scripts/npm/release.py` through synthetic `npm`/`gh`/`git`
+  CLIs, so the guards are covered with zero registry or GitHub writes.
+- `scripts/npm/target.env` is the static release identity; `release.py` is the only writer and
+  every write needs its own `CONFIRM=<action>`. `tools/pack-smoke.mjs` proves the tarball ships
+  what the manifest points at.
+- `.github/workflows/check.yml` gates every change; `release.yml` publishes on a `v*` tag
+  through npm OIDC trusted publishing behind the `npm-release` approval environment.
+- `dist/` is build output and is not edited by hand.
 
 ## Sharp edges
 
-**A linked profile loads `lib/`, not `src/`.** Source edits are invisible to
+**A linked profile loads `dist/`, not `src/`.** Source edits are invisible to
 `dsh --profile <name>` until `pnpm run build` runs.
+
+**A published version is immutable and the first one can only be bootstrapped by hand.** npm
+needs the package to exist before trusted publishing can be configured, so `release.yml`
+skips the publish job for `v0.1.0`; follow [RELEASE.md](RELEASE.md) for that one.
 
 **The constitution is size-guarded on purpose.** It is input cost on every call; a spec fails
 if it grows past 360 estimated tokens (a crude estimate that overcounts real prose by roughly
