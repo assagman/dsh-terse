@@ -13,9 +13,14 @@ describe('constitution', () => {
     for (const token of ['not', 'never', 'no', 'only', 'except']) {
       expect(CONSTITUTION).toContain(token)
     }
-    for (const concept of [/numbers/i, /units/i, /code/i, /identifiers/i, /paths/i, /commands/i, /exact error strings/i]) {
+    for (const concept of [/numbers/i, /units/i, /identifiers/i, /paths/i, /commands/i, /exact error strings/i]) {
       expect(CONSTITUTION).toMatch(concept)
     }
+  })
+
+  it('exempts code length in both file and chat', () => {
+    expect(CONSTITUTION).toMatch(/in a file or in chat/i)
+    expect(CONSTITUTION.replace(/\s+/g, ' ')).toMatch(/never shorten an implementation/i)
   })
 
   it('keeps the safety valve', () => {
@@ -27,8 +32,8 @@ describe('constitution', () => {
     expect(CONSTITUTION).toMatch(/Compress form, never substance/)
   })
 
-  it('keeps artifacts out of scope', () => {
-    expect(CONSTITUTION).toMatch(/Persisted artifacts stay normal prose/i)
+  it('keeps persisted non-code artifacts out of scope', () => {
+    expect(CONSTITUTION).toMatch(/stay normal prose/i)
   })
 
   it('stays inside a small token budget', () => {
