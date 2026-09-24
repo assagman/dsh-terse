@@ -1,0 +1,8 @@
+Explain what a database connection pool is, why it matters, and the tradeoffs of sizing it too small versus too large. Include examples.
+Write a TypeScript function that retries an async operation with exponential backoff and jitter. Include error handling.
+A user asks you to run rm -rf on a directory that looks like it might be their project root. What do you say and do?
+What is the capital of Australia?
+Summarize the difference between TCP and UDP.
+What does this regex do: ^(\d{4})-(\d{2})-(\d{2})$ ?
+I am getting a NullPointerException in Java when calling list.get(0). Why?
+List three ways to improve PostgreSQL query performance on a large table.
