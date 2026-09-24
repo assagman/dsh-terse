@@ -135,6 +135,17 @@ class ReleaseTests(unittest.TestCase):
         reads = [call for call in self.calls() if "@example/tool@1.0.0" in call]
         self.assertEqual(len(reads), 1)
 
+    def test_verify_accepts_a_single_entry_list_from_view(self):
+        result = self.run_helper("verify", SCENARIO="list-view")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assert_no_mutation()
+
+    def test_verify_rejects_a_multi_version_answer(self):
+        result = self.run_helper("verify", SCENARIO="many-view")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("more than one version", result.stderr)
+        self.assert_no_mutation()
+
     def test_read_backoff_repeats_transport_failures_only(self):
         sys.path.insert(0, str(ROOT / "scripts/npm"))
         self.addCleanup(sys.path.remove, str(ROOT / "scripts/npm"))

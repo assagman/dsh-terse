@@ -168,6 +168,13 @@ class Target:
 
     def registry_metadata(self):
         metadata = read_json(self.npm("view", f"{self.package}@{self.version}", "--json").stdout)
+        # npm answers a fully specified package@version with either the manifest
+        # object or a one-element list holding it, and the shape can differ between
+        # npm releases. A list of any other length means the read is not the single
+        # version under review, so it is rejected rather than guessed at.
+        if isinstance(metadata, list):
+            require(len(metadata) == 1, "registry answered with more than one version")
+            metadata = metadata[0]
         self.validate_metadata(metadata)
         return metadata
 
