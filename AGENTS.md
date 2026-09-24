@@ -7,6 +7,19 @@ never touches the deployment's own system prompt. ESM TypeScript (strict), Node 
 pnpm. Behaviour, install, and the benchmark that backs the claims:
 [README.md](README.md) and [benchmark/README.md](benchmark/README.md).
 
+## Contributing
+
+**`main` is PR-only. Never commit or push to it, not even a one-line fix.** Work in a
+worktree on a feature branch, open a pull request, and let it merge there. A fix small enough
+to feel exempt is the one most likely to skip review, so there is no size that makes a direct
+push acceptable.
+
+Commits are signed and carry DCO:
+
+```sh
+git commit -s -S -m "<conventional-commit message>"
+```
+
 ## Commands
 
 | Task | Command |
