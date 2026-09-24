@@ -92,6 +92,32 @@ pnpm run build
 
 A profile loads `lib/`, not `src/`; run `pnpm run build` before dogfooding a linked profile.
 
+## Try it in the TUI
+
+`scripts/dogfood/run-terse-from-worktree.sh` clones the real `~/.dsh` to a scratch
+directory, mounts this checkout on the real `tui` profile inside the clone, and launches
+it. Every composition input is present — your other bundles, the profile patch, settings,
+themes, credentials — while every write goes to the throwaway clone.
+
+```bash
+./scripts/dogfood/run-terse-from-worktree.sh              # clone, build, launch
+./scripts/dogfood/run-terse-from-worktree.sh --no-launch  # set up, print the command
+./scripts/dogfood/run-terse-from-worktree.sh --status     # show what the clone runs
+./scripts/dogfood/run-terse-from-worktree.sh --with-sessions
+./scripts/dogfood/run-terse-from-worktree.sh --clean      # remove the clone
+```
+
+What to look for on the surface: the status line shows `injected … terse:standing …` when
+the layer is live. Ask a short factual question (expect one line), ask for code inline
+(expect the full implementation, no elision), and ask something safety-critical (expect
+full prose). Those three cases are the contract; if the code case is trimmed, that is a bug.
+
+## Benchmark
+
+`benchmark/benchmark.sh` measures this plugin against a control profile that lacks it. See
+[benchmark/README.md](benchmark/README.md); the neutral home is mandatory, because a
+profile whose global instructions already ask for brevity makes the control terse too.
+
 ## License
 
 MIT.
