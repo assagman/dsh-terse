@@ -81,8 +81,10 @@ skips the publish job for `v0.1.0`; follow [RELEASE.md](RELEASE.md) for that one
 
 **Dependencies resolve under quarantine.** `pnpm-workspace.yaml` sets `minimumReleaseAge: 10080`
 with the harness lines excluded, and a package whose install runs a build step stays blocked
-until it is listed in `allowBuilds`. CI adds `npm audit signatures` and
-`pnpm audit --audit-level high` on top of `pnpm run check`.
+until it is listed in `allowBuilds`. `.github/dependabot.yml` repeats that window as a 7-day
+cooldown and ignores the transitive `@vitest/mocker` major and minor raises the runner cannot
+take. CI adds `npm audit signatures` and `pnpm audit --audit-level high` on top of
+`pnpm run check`.
 
 **The constitution is size-guarded on purpose.** It is input cost on every call; a spec fails
 if it grows past 360 estimated tokens (a crude estimate that overcounts real prose by roughly

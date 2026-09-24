@@ -1,0 +1,39 @@
+# Dependabot policy. The supply chain window lives in pnpm-workspace.yaml, so the
+# cooldown below mirrors it: a bot pull request and `pnpm install` should never
+# disagree about which release is old enough to use.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    cooldown:
+      # minimumReleaseAge: 10080 in pnpm-workspace.yaml, expressed in days.
+      default-days: 7
+      exclude:
+        # The harness line is younger than the window, which is why the workspace
+        # exempts these too and the lockfile pins what resolves.
+        - '@deepseek-ai/dsh-*'
+        - '@deepseek-ai/cordis'
+    groups:
+      # One pull request for the toolchain that verifies the plugin, so review
+      # attention stays on the packages that actually ship.
+      dev-toolchain:
+        dependency-type: development
+        patterns: ['*']
+        update-types: [minor, patch]
+    ignore:
+      # vitest pins its own mocker, so raising the mocker alone cannot build the
+      # tree vitest expects; only a vitest bump is allowed to cross that line.
+      - dependency-name: '@vitest/mocker'
+        update-types: [version-update:semver-major, version-update:semver-minor]
+
+  # Every action is pinned by commit SHA, and nothing else raises those pins.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
