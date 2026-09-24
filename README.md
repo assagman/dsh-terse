@@ -31,7 +31,8 @@ Compression is aimed at the **chat mouth**, never at meaning or at durable artif
 - **Tool output is only elided reversibly**, never lossy on errors, and the locator lets the
   agent pull the original back.
 
-The evidence behind those choices is in [docs/research.md](docs/research.md).
+Those choices are measured in [benchmark/README.md](benchmark/README.md); their design record
+is a local working artifact, not a shipped doc.
 
 ## Install
 
