@@ -7,6 +7,10 @@ autoInstallPeers: true
 # than the window, so it is excluded and the lockfile pins what resolves.
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
+  # The bare name needs its own entry: 'dsh-*' requires a hyphen, so it never
+  # matched the base package, and the base package is the one the rest of the
+  # harness line declares its peers against.
+  - '@deepseek-ai/dsh'
   - '@deepseek-ai/dsh-*'
   - '@deepseek-ai/cordis@4.0.2'
 allowBuilds:
