@@ -117,10 +117,12 @@ if TOOL == "npm":
         metadata["dist"] = {"integrity": "bad" if SCENARIO == "bad-integrity" else os.environ["ARTIFACT_INTEGRITY"]}
         if SCENARIO == "wrong-manifest":
             metadata["name"] = "other"
-        # npm answers a fully specified package@version with a one-element list on
-        # some releases and a bare manifest on others; the helper must accept both.
-        output([metadata, metadata] if SCENARIO == "many-view"
-               else [metadata] if SCENARIO == "list-view" else metadata)
+        # npm 12 wraps the metadata for one version in a one-element list; npm 11 returns it directly.
+        if SCENARIO == "array-metadata":
+            metadata = [metadata]
+        if SCENARIO == "double-metadata":
+            metadata = [metadata, metadata]
+        output(metadata)
     if args[0] == "publish":
         if SCENARIO == "publish-error":
             sys.exit(1)
