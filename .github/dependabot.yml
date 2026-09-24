@@ -14,6 +14,7 @@ updates:
       exclude:
         # The harness line is younger than the window, which is why the workspace
         # exempts these too and the lockfile pins what resolves.
+        - '@deepseek-ai/dsh'
         - '@deepseek-ai/dsh-*'
         - '@deepseek-ai/cordis'
     groups:
